@@ -1,0 +1,30 @@
+---
+base_packages_common:
+  - bash-completion
+  - file
+  - lsof
+  - wget
+  - netcat
+  - telnet
+  - bc
+  - sudo
+  - tcpdump
+  - htop
+  - net-tools
+  - parted
+  - iftop
+  - strace
+  - traceroute
+  - vim
+  - nmap
+  - rsync
+  - curl
+  - ngrep
+  - jq
+  - ncdu
+  - tree
+  - gnupg2
+#  - software-properties-common
+#  - qemu-guest-agent
+
+base_packages_extra: []
