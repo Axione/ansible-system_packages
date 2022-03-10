@@ -23,9 +23,9 @@ See [variables](/defaults/main.yml) for more details.
 
         ---
         - hosts: system_packages
-          become: yes
+          become: true
           become_method: sudo
-          gather_facts: yes
+          gather_facts: true
           roles:
             - role: ansible-system_packages
 
