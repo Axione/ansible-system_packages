@@ -1,6 +1,6 @@
 ---
 ### REDHAT 7 Install base repositories
-- name: "Install for rhel7"
+- name: "REDHAT 7 | Install repository"
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
   block:
     - name: Enable rhel-7-server-extras-rpms
@@ -13,19 +13,19 @@
         name: dnf
         state: present
 
-- name: Import EPEL GPG key.
+- name: "REDHAT | Import EPEL GPG key."
   ansible.builtin.rpm_key:
     key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
     state: present
   when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
-- name: REDHAT | Install EPEL repository
+- name: "REDHAT | Install EPEL repository"
   ansible.builtin.yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
   when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
-- name: DEBIAN | Install base packages
+- name: "DEBIAN | Install base packages"
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
@@ -34,9 +34,9 @@
     - "{{ base_packages_common }}"
     - "{{ base_packages_release_specific }}"
     - "{{ base_packages_extra }}"
-  when: ansible_distribution == 'Debian'
+  when: ansible_os_family == 'Debian'
 
-- name: REDHAT | Install base packages
+- name: "REDHAT | Install base packages"
   ansible.builtin.yum:
     name: "{{ base_packages_common  + base_packages_release_specific + base_packages_extra }}"
     state: present

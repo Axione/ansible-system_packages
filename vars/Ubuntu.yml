@@ -1,0 +1,14 @@
+---
+base_packages_release_specific:
+  - apt-listchanges
+  - gettext-base
+  - iputils-ping
+  - apt-transport-https
+  - dnsutils
+  - locate
+  - python3-apt
+  - apparmor-utils
+  - scdaemon
+  - lsb-release
+  - dirmngr
+  - ntpstat
