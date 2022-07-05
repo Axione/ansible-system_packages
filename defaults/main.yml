@@ -1,5 +1,7 @@
 ---
 base_packages_install_dnf: true
+
+### For all families and distributions
 base_packages_common:
   - bash-completion
   - file
@@ -27,5 +29,28 @@ base_packages_common:
   - gnupg2
 #  - software-properties-common
 #  - qemu-guest-agent
+
+### For specific families
+base_packages_family_debian:
+  - apt-listchanges
+  - gettext-base
+  - iputils-ping
+  - apt-transport-https
+  - dnsutils
+  - locate
+  - python3-apt
+  - lsb-release
+  - dirmngr
+  - ntpstat
+  - apparmor-utils
+  - scdaemon
+
+### For specific distribution
+#base_packages_distrib_ubuntu: []
+base_packages_distrib_debian:
+  - rcconf
+
+### For specific distribution major version
+#base_packages_distrib_ubuntu_22: []
 
 base_packages_extra: []
