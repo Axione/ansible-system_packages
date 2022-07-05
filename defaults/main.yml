@@ -52,5 +52,7 @@ base_packages_distrib_debian:
 
 ### For specific distribution major version
 #base_packages_distrib_ubuntu_22: []
+base_packages_distrib_oraclelinux_7:
+  - python2-dnf
 
 base_packages_extra: []
