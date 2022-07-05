@@ -1,0 +1,3 @@
+---
+base_packages_release_specific:
+  - policycoreutils-python
