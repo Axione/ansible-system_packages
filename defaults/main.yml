@@ -54,5 +54,6 @@ base_packages_distrib_debian:
 #base_packages_distrib_ubuntu_22: []
 base_packages_distrib_oraclelinux_7:
   - python2-dnf
+  - policycoreutils-python
 
 base_packages_extra: []
