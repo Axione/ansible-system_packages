@@ -1,5 +1,0 @@
----
-base_packages_release_specific:
-  - setroubleshoot
-  - setools
-  - mlocate
