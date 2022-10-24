@@ -1,5 +1,5 @@
 ---
-### REDHAT 7 Install base repositories
+### REDHAT families Install repositories
 - name: "REDHAT | Install extra repositories"
   when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]
   block:
@@ -13,31 +13,34 @@
         name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
         state: present
 
-    - name: "REDHAT | Installing oracle-epel-release-el7"
+    - name: "OracleLinux | Installing oracle-epel-release-el7"
       ansible.builtin.yum:
         name: "oracle-epel-release-el7"
         state: present
       when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
 
-        #- name: "REDHAT | Installing dnf package"
-        #  ansible.builtin.yum:
-        #    name: dnf
-        #    state: present
-
-        #- name: "REDHAT-7 | Enable rhel-x-server-extras-rpms"
-        #  community.general.rhsm_repository:
-        #    name: "rhel-{{ ansible_distribution_major_version }}-server-extras-rpms"
-        #    state: enabled
-
-- name: "DEBIAN | Install base packages"
+- name: "DEBIAN | Install packages"
   ansible.builtin.package:
-    name: "{{ base_packages_common  + base_packages_family + base_packages_distrib + base_packages_distrib_version + base_packages_extra }}"
+    name: "{{ packages_common  + packages_family + packages_distrib + packages_distrib_version + packages_extra }}"
     state: present
     update_cache: true
   when: ansible_os_family == 'Debian'
 
-- name: "REDHAT | Install base packages"
+- name: "REDHAT | Install packages"
   ansible.builtin.yum:
-    name: "{{ base_packages_common  + base_packages_family + base_packages_distrib + base_packages_distrib_version + base_packages_extra }}"
+    name: "{{ packages_common  + packages_family + packages_distrib + packages_distrib_version + packages_extra }}"
+    state: present
+  when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]
+
+- name: "DEBIAN | Remove packages"
+  ansible.builtin.package:
+    name: "{{ packages_rm_common  + packages_rm_family + packages_rm_distrib + packages_rm_distrib_version + packages_rm_extra }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == 'Debian'
+
+- name: "REDHAT | Remove packages"
+  ansible.builtin.yum:
+    name: "{{ packages_rm_common  + packages_rm_family + packages_rm_distrib + packages_rm_distrib_version + packages_rm_extra }}"
     state: present
   when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]

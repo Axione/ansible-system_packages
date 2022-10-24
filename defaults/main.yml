@@ -1,8 +1,6 @@
 ---
-base_packages_install_dnf: true
-
 ### For all families and distributions
-base_packages_common:
+packages_common:
   - bash-completion
   - file
   - lsof
@@ -31,7 +29,7 @@ base_packages_common:
 #  - qemu-guest-agent
 
 ### For specific families
-base_packages_family_debian:
+packages_family_debian:
   - apt-listchanges
   - gettext-base
   - iputils-ping
@@ -45,15 +43,26 @@ base_packages_family_debian:
   - apparmor-utils
   - scdaemon
 
+packages_family_redhat:
+  - redhat-lsb-core
+
 ### For specific distribution
-#base_packages_distrib_ubuntu: []
-base_packages_distrib_debian:
+#packages_distrib_ubuntu: []
+packages_distrib_debian:
   - rcconf
 
 ### For specific distribution major version
-#base_packages_distrib_ubuntu_22: []
-base_packages_distrib_oraclelinux_7:
+#packages_distrib_ubuntu_22: []
+packages_distrib_oraclelinux_7:
   - python2-dnf
   - policycoreutils-python
 
-base_packages_extra: []
+packages_extra: []
+
+
+#There is all the same for removing packages
+packages_rm_common: []
+#packages_rm_family_redhat: []
+#packages_rm_distrib_ubuntu: []
+#packages_rm_distrib_debian_11: []
+packages_rm_extra: []
