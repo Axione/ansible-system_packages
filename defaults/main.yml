@@ -45,6 +45,7 @@ packages_family_debian:
 
 packages_family_redhat:
   - redhat-lsb-core
+  - yum-utils
 
 ### For specific distribution
 #packages_distrib_ubuntu: []

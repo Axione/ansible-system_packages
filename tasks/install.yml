@@ -35,12 +35,23 @@
 - name: "DEBIAN | Remove packages"
   ansible.builtin.package:
     name: "{{ packages_rm_common  + packages_rm_family + packages_rm_distrib + packages_rm_distrib_version + packages_rm_extra }}"
-    state: present
+    state: absent
     update_cache: true
   when: ansible_os_family == 'Debian'
 
 - name: "REDHAT | Remove packages"
   ansible.builtin.yum:
     name: "{{ packages_rm_common  + packages_rm_family + packages_rm_distrib + packages_rm_distrib_version + packages_rm_extra }}"
-    state: present
+    state: absent
+  when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]
+
+- name: "REDHAT | Remove packages relationship"
+  ansible.builtin.shell: yum remove -y `package-cleanup --leaves`
+  with_sequence: count=3
+  changed_when: false
+  when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]
+
+- name: "REDHAT | Packages clean all"
+  ansible.builtin.shell: yum clean all && rm -rf /var/cache/yum
+  changed_when: false
   when: ansible_os_family in ["RedHat", "Rocky", "OracleLinux"]
