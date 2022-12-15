@@ -42,6 +42,7 @@ packages_family_debian:
   - ntpstat
   - apparmor-utils
   - scdaemon
+  - cracklib-runtime
 
 packages_family_redhat:
   - redhat-lsb-core
