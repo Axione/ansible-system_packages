@@ -45,7 +45,6 @@ packages_family_debian:
   - cracklib-runtime
 
 packages_family_redhat:
-  - redhat-lsb-core
   - yum-utils
 
 ### For specific distribution
@@ -55,9 +54,19 @@ packages_distrib_debian:
 
 ### For specific distribution major version
 #packages_distrib_ubuntu_22: []
+packages_distrib_centos_7:
+  - redhat-lsb-core
+
 packages_distrib_oraclelinux_7:
+  - redhat-lsb-core
   - python2-dnf
   - policycoreutils-python
+
+packages_distrib_oraclelinux_8:
+  - redhat-lsb-core
+
+packages_distrib_rocky_8:
+  - redhat-lsb-core
 
 packages_extra: []
 
