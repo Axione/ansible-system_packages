@@ -19,6 +19,8 @@ none
 
 See [variables](/defaults/main.yml) for more details.
 
+With default variables, this role assume it doesnt change anything on the system. You need to set the config variables like in the exemple in order to start configuration.
+
 ## Examples
 
         ---
@@ -28,6 +30,34 @@ See [variables](/defaults/main.yml) for more details.
           gather_facts: true
           roles:
             - role: ansible-system_packages
+          vars:
+            packages_install_epel_repo: true
+            package_repo_yum_cleanup: true
+            packages_common:
+              - bash-completion
+            packages_family_debian:
+              - locate
+            packages_family_redhat:
+              - yum-utils
+            packages_distrib_debian:
+              - rcconf
+            packages_distrib_centos_7:
+              - redhat-lsb-core
+            packages_distrib_oraclelinux_7:
+              - redhat-lsb-core
+            packages_rm_common:
+              - bash-completion
+            packages_rm_family_debian:
+              - locate
+            packages_rm_family_redhat:
+              - yum-utils
+            packages_rm_distrib_debian:
+              - rcconf
+            packages_rm_distrib_centos_7:
+              - redhat-lsb-core
+            packages_rm_distrib_oraclelinux_7:
+              - redhat-lsb-core
+
 
 
 ## License

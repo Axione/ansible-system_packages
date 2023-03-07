@@ -1,0 +1,63 @@
+---
+- name: "REDHAT | Install extra repositories"
+  when: packages_install_epel_repo is defined and packages_install_epel_repo|bool
+  block:
+    - name: "Check if EPEL repo is already configured"
+      stat:
+        path: "/etc/yum.repos.d/epel.repo"
+      register: epel_repo
+
+    - name: "REDHAT | Import EPEL GPG key."
+      ansible.builtin.rpm_key:
+        key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+        state: present
+      when: not epel_repo.stat.exists
+
+    - name: "REDHAT | Installing epel-release"
+      ansible.builtin.yum:
+        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+        state: present
+      when: not epel_repo.stat.exists
+
+    - name: "OracleLinux | Installing oracle-epel-release-el7"
+      ansible.builtin.yum:
+        name: "oracle-epel-release-el7"
+        state: present
+      when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
+
+- name: "REDHAT | Install packages"
+  ansible.builtin.yum:
+    name: "{{ packages_common|default([])  + packages_family|default([]) + packages_distrib|default([]) + packages_distrib_version|default([]) + packages_extra|default([]) }}"
+    state: present
+  when:
+    - (packages_common is defined and packages_common|length>0) or
+      (packages_family is defined and packages_family|length>0) or
+      (packages_distrib is defined and packages_distrib|length>0) or
+      (packages_distrib_version is defined and packages_distrib_version|length>0) or
+      (packages_extra is defined and packages_extra|length>0)
+
+- name: "REDHAT | Remove packages"
+  ansible.builtin.yum:
+    name: "{{ packages_rm_common|default([]) + packages_rm_family|default([]) + packages_rm_distrib|default([]) + packages_rm_distrib_version|default([]) + packages_rm_extra|default([]) }}"
+    state: absent
+  when:
+    - (packages_rm_common is defined and packages_rm_common|length>0) or
+      (packages_rm_family is defined and packages_rm_family|length>0) or
+      (packages_rm_distrib is defined and packages_rm_distrib|length>0) or
+      (packages_rm_distrib_version is defined and packages_rm_distrib_version|length>0) or
+      (packages_rm_extra is defined and packages_rm_extra|length>0)
+
+- name: "REDHAT | Remove packages relationship"
+  ansible.builtin.shell: yum remove -y `package-cleanup --leaves`
+  with_sequence: count=3
+  changed_when: false
+  when:
+    - package_repo_yum_cleanup is defined
+    - package_repo_yum_cleanup|bool
+
+- name: "REDHAT | Packages clean all"
+  ansible.builtin.shell: yum clean all && rm -rf /var/cache/yum
+  changed_when: false
+  when:
+    - package_repo_yum_cleanup is defined
+    - package_repo_yum_cleanup|bool
