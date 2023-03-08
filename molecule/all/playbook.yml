@@ -1,0 +1,24 @@
+---
+- name: Run role
+  hosts: all
+  become: true
+  any_errors_fatal: true
+
+  roles:
+    - role: ansible-system_packages
+
+  vars:
+    packages_install_epel_repo: true
+    package_repo_yum_cleanup: true
+    packages_common:
+      - bash-completion
+    packages_family_debian:
+      - locate
+    packages_family_redhat:
+      - yum-utils
+    packages_distrib_debian:
+      - rcconf
+    packages_distrib_centos_7:
+      - redhat-lsb-core
+    packages_distrib_oraclelinux_7:
+      - redhat-lsb-core
