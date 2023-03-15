@@ -10,7 +10,6 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
 Install base packages
-
 ## Requirements
 
 none
@@ -19,7 +18,7 @@ none
 
 See [variables](/defaults/main.yml) for more details.
 
-With default variables, this role assume it doesnt change anything on the system. You need to set the config variables like in the exemple in order to start configuration.
+With default variables, this role dont change anything on the system. You need to set the config variables like in the exemple in order to start configuration.
 
 ## Examples
 
