@@ -3,7 +3,7 @@
   when: packages_install_epel_repo is defined and packages_install_epel_repo|bool
   block:
     - name: "Check if EPEL repo is already configured"
-      stat:
+      ansible.builtin.stat:
         path: "/etc/yum.repos.d/epel.repo"
       register: epel_repo
 
