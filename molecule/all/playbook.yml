@@ -4,11 +4,6 @@
   become: true
   any_errors_fatal: true
 
-  tasks:
-    - name: Include role
-      ansible.builtin.include_role:
-        name: ansible-system_packages
-
   vars:
     packages_install_epel_repo: true
     package_repo_yum_cleanup: true
@@ -24,3 +19,8 @@
       - redhat-lsb-core
     packages_distrib_oraclelinux_7:
       - redhat-lsb-core
+
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: ansible-system_packages
