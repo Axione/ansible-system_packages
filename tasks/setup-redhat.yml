@@ -17,18 +17,30 @@
       ansible.builtin.yum:
         name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
         state: present
+      register: pkg_result
+      retries: 12
+      delay: 10
+      until: pkg_result is success
       when: not epel_repo.stat.exists
 
     - name: "OracleLinux | Installing oracle-epel-release-el7"
       ansible.builtin.yum:
         name: "oracle-epel-release-el7"
         state: present
+      register: pkg_result
+      retries: 12
+      delay: 10
+      until: pkg_result is success
       when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
 
 - name: "REDHAT | Install packages"
   ansible.builtin.yum:
     name: "{{ packages_common|default([])  + packages_family|default([]) + packages_distrib|default([]) + packages_distrib_version|default([]) + packages_extra|default([]) }}"
     state: present
+  register: pkg_result
+  retries: 12
+  delay: 10
+  until: pkg_result is success
   when:
     - (packages_common is defined and packages_common|length>0) or
       (packages_family is defined and packages_family|length>0) or
@@ -40,6 +52,10 @@
   ansible.builtin.yum:
     name: "{{ packages_rm_common|default([]) + packages_rm_family|default([]) + packages_rm_distrib|default([]) + packages_rm_distrib_version|default([]) + packages_rm_extra|default([]) }}"
     state: absent
+  register: pkg_result
+  retries: 12
+  delay: 10
+  until: pkg_result is success
   when:
     - (packages_rm_common is defined and packages_rm_common|length>0) or
       (packages_rm_family is defined and packages_rm_family|length>0) or
