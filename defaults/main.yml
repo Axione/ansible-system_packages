@@ -1,6 +1,7 @@
 ---
 packages_install_epel_repo: false
 package_repo_yum_cleanup: false
+package_purge_onremove: true
 
 ### For all families and distributions
 #packages_common:
