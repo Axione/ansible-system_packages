@@ -1,7 +1,7 @@
 ---
 - name: "DEBIAN | Install packages"
   ansible.builtin.package:
-    name: "{{ packages_common|default([])  + packages_family|default([]) + packages_distrib|default([]) + packages_distrib_version|default([]) + packages_extra|default([]) }}"
+    name: "{{ packages_common | default([]) + packages_family | default([]) + packages_distrib | default([]) + packages_distrib_version | default([]) + packages_extra | default([]) }}"
     state: present
     update_cache: true
   register: pkg_result
@@ -17,7 +17,7 @@
 
 - name: "DEBIAN | Remove packages"
   ansible.builtin.apt:
-    name: "{{ packages_rm_common|default([]) + packages_rm_family|default([]) + packages_rm_distrib|default([]) + packages_rm_distrib_version|default([]) + packages_rm_extra|default([]) }}"
+    name: "{{ packages_rm_common | default([]) + packages_rm_family | default([]) + packages_rm_distrib | default([]) + packages_rm_distrib_version | default([]) + packages_rm_extra | default([]) }}"
     state: absent
     purge: "{{ package_purge_onremove }}"
     update_cache: true
