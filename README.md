@@ -22,6 +22,7 @@
 ## Description
 
 Install base packages
+
 ## Requirements
 
 none
@@ -69,7 +70,6 @@ With default variables, this role dont change anything on the system. You need t
               - redhat-lsb-core
             packages_rm_distrib_oraclelinux_7:
               - redhat-lsb-core
-
 
 
 ## License
