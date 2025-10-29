@@ -53,7 +53,7 @@ With default variables, this role dont change anything on the system. You need t
             packages_family_redhat:
               - yum-utils
             packages_distrib_debian:
-              - rcconf
+              - vim
             packages_distrib_centos_7:
               - redhat-lsb-core
             packages_distrib_oraclelinux_7:
@@ -65,7 +65,7 @@ With default variables, this role dont change anything on the system. You need t
             packages_rm_family_redhat:
               - yum-utils
             packages_rm_distrib_debian:
-              - rcconf
+              - vim
             packages_rm_distrib_centos_7:
               - redhat-lsb-core
             packages_rm_distrib_oraclelinux_7:

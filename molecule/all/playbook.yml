@@ -14,7 +14,7 @@
     packages_family_redhat:
       - yum-utils
     packages_distrib_debian:
-      - rcconf
+      - vim
     packages_distrib_centos_7:
       - redhat-lsb-core
     packages_distrib_oraclelinux_7:
