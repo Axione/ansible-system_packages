@@ -24,7 +24,7 @@ Install base packages
 
 ## Requirements
 
-none
+- lotusnoir.system_repo_epel
 
 ## Role variables
 
