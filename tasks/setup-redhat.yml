@@ -7,7 +7,7 @@
         path: "/etc/yum.repos.d/epel.repo"
       register: epel_repo
 
-    - name: "Install requierements"
+    - name: "REDHAT 10+ | Install requierements"
       ansible.builtin.dnf:
         name: ["gnupg2"]
         state: present
@@ -16,24 +16,35 @@
       retries: 12
       delay: 10
       until: __pkg_result is success
-      when: ansible_distribution in ['OracleLinux'] and ansible_distribution_major_version == '10'
+      when: (ansible_facts.distribution_major_version | int) >= 10
 
-    - name: "REDHAT | Import EPEL GPG key."
-      ansible.builtin.rpm_key:
-        key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
-        state: present
-      when: not epel_repo.stat.exists
+    - name: "REDHAT | Add EPEL repository manually"
+      ansible.builtin.yum_repository:
+        name: epel
+        description: "Extra Packages for Enterprise Linux {{ ansible_facts.distribution_major_version }}"
+        baseurl: "https://download.fedoraproject.org/pub/epel/{{ ansible_facts.distribution_major_version }}/Everything/$basearch"
+        enabled: true
+        gpgcheck: true
+        gpgkey: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts.distribution_major_version }}"
 
-    - name: "REDHAT | Installing epel-release"
-      ansible.builtin.dnf:
-        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
-        state: present
-      register: __pkg_result
-      retries: 12
-      delay: 10
-      until: __pkg_result is success
-      when: not epel_repo.stat.exists
-
+#    - name: "REDHAT 9- | Import EPEL GPG key."
+#      ansible.builtin.rpm_key:
+#        key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts.distribution_major_version }}"
+#        state: present
+#      when: not epel_repo.stat.exists
+#      when: ansible_facts.distribution_major_version < '10'
+#
+#    - name: "REDHAT 9- | Installing epel-release"
+#      ansible.builtin.dnf:
+#        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts.distribution_major_version }}.noarch.rpm"
+#        state: present
+#      register: __pkg_result
+#      retries: 12
+#      delay: 10
+#      until: __pkg_result is success
+#      when: not epel_repo.stat.exists
+#      when: ansible_facts.distribution_major_version < '10'
+#
 #    - name: "OracleLinux | Installing oracle-epel-release-el7"
 #      ansible.builtin.yum:
 #        name: "oracle-epel-release-el7"
@@ -42,7 +53,7 @@
 #      retries: 12
 #      delay: 10
 #      until: __pkg_result is success
-#      when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
+#      when: ansible_facts.distribution == "OracleLinux" and ansible_facts.distribution_major_version == "7"
 
 - name: "REDHAT | Install packages"
   ansible.builtin.dnf:
